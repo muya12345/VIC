@@ -1,100 +1,75 @@
-<!DOCTYPE html>
+
+
+    
+
+   <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>For Moreen</title>
+  
+  <!-- Google Fonts: Lobster -->
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
   <style>
+    /* Body Styling */
     body {
       margin: 0;
       padding: 0;
       background: linear-gradient(to bottom right, #ffd6e8, #fff5f9);
       overflow: hidden;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Poppins', sans-serif; /* Default font for the body */
       text-align: center;
       color: #d6336c;
     }
 
-    /* Animated Flower Bouquet (Using CSS Animation) */
-    .bouquet {
-      position: absolute;
-      bottom: -300px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 150px;
-      height: 150px;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/4/46/Flower_bouquet_animated.gif') no-repeat center center;
-      background-size: cover;
-      animation: rise 4s ease-out forwards;
+    h1, h2, h3, .message {
+      font-family: 'Lobster', cursive; /* Stylish cursive font for headings and messages */
+      font-weight: 400;
+      color: #d6336c;
     }
 
-    @keyframes rise {
-      0% { bottom: -300px; }
-      100% { bottom: 100px; }
-    }
-
-    /* Falling Petals Animation (CSS-based) */
-    .petals {
-      position: absolute;
-      top: -50px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-    }
-
-    .petal {
-      position: absolute;
-      top: 0;
-      width: 30px;
-      height: 30px;
-      background-color: #f8a6c1; /* Petal color */
-      border-radius: 50%;
-      animation: fall 5s linear infinite;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(-100px); opacity: 1; }
-      100% { transform: translateY(100vh); opacity: 0; }
-    }
-
-    .petal:nth-child(1) { left: 5%; animation-delay: 0s; }
-    .petal:nth-child(2) { left: 10%; animation-delay: 1s; }
-    .petal:nth-child(3) { left: 15%; animation-delay: 2s; }
-    .petal:nth-child(4) { left: 20%; animation-delay: 3s; }
-    .petal:nth-child(5) { left: 25%; animation-delay: 4s; }
-
-    /* Kittens and I love you */
-    .kittens {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .kittens img {
-      width: 60px;
-      animation: wiggle 3s infinite;
-    }
-
-    @keyframes wiggle {
-      0%, 100% { transform: rotate(-5deg); }
-      50% { transform: rotate(5deg); }
-    }
-
-    .love-text {
+    p {
+      font-family: 'Poppins', sans-serif; /* Clean font for paragraphs */
       font-size: 1.2rem;
-      font-weight: bold;
+      line-height: 1.8;
+      color: #333;
     }
 
+    /* Button Styling */
+    .love-button {
+      background-color: #ff6699;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.5rem;
+      font-family: 'Lobster', cursive; /* Apply Lobster font to the button */
+      border-radius: 30px;
+      cursor: pointer;
+      animation: bounce 1s infinite alternate;
+      transition: transform 0.3s;
+    }
+
+    .love-button:hover {
+      transform: scale(1.1); /* Slight hover effect */
+    }
+
+    /* Kitten Animation and Love Text */
+    .kittens .love-text {
+      font-family: 'Lobster', cursive; /* Apply Lobster font to love text */
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #ff66b2;
+      margin-top: 10px;
+    }
+
+    /* Message Fade-In Animation */
     .message {
       display: none;
       max-width: 600px;
       margin: 20px auto;
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       opacity: 0;
       animation: fadeIn 3s forwards;
     }
@@ -103,80 +78,96 @@
       to { opacity: 1; }
     }
 
-    .button-container {
-      display: none;
-      margin-top: 30px;
+    /* Falling Petals Animation */
+    @keyframes fallingPetals {
+      0% { top: -50px; opacity: 0; }
+      100% { top: 100%; opacity: 1; }
     }
 
-    .love-button {
-      background-color: #ff6699;
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 1.5rem;
-      border-radius: 30px;
-      cursor: pointer;
-      animation: bounce 1s infinite alternate;
+    .petals {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: -1;
     }
 
-    @keyframes bounce {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-10px); }
+    .petal {
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-color: rgba(255, 105, 180, 0.8);
+      border-radius: 50%;
+      opacity: 0;
+      animation: fallingPetals 3s infinite ease-in;
+      animation-delay: calc(-3s * var(--i)); /* Randomize delay */
+    }
+
+    /* Bouquet Animation */
+    @keyframes bouquetAnimation {
+      0% { transform: translateY(100%); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .bouquet {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bouquetAnimation 2s ease-out;
     }
   </style>
 </head>
 <body>
 
-  <!-- Animated Flower Bouquet (CSS) -->
-  <div class="bouquet"></div>
-
-  <!-- Falling Petals Animation (CSS-based) -->
+  <!-- Animated Flower Petals -->
   <div class="petals">
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
+    <div class="petal" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="petal" style="left: 20%; animation-delay: 0.5s;"></div>
+    <div class="petal" style="left: 30%; animation-delay: 1s;"></div>
+    <div class="petal" style="left: 40%; animation-delay: 1.5s;"></div>
+    <div class="petal" style="left: 50%; animation-delay: 2s;"></div>
+    <div class="petal" style="left: 60%; animation-delay: 2.5s;"></div>
+    <div class="petal" style="left: 70%; animation-delay: 3s;"></div>
+    <div class="petal" style="left: 80%; animation-delay: 3.5s;"></div>
+    <div class="petal" style="left: 90%; animation-delay: 4s;"></div>
   </div>
 
-  <!-- Kittens and I love you -->
+  <!-- Bouquet Animation -->
+  <div class="bouquet">
+    <img src="https://via.placeholder.com/300x200.png?text=Bouquet" alt="Bouquet of Flowers" />
+  </div>
+
+  <!-- Kittens with Love Text -->
   <div class="kittens">
-    <img src="https://media.giphy.com/media/1bhq0FiJ0W9yZnyWaN/giphy.gif" alt="Kitten">
-    <div class="love-text">I love you</div>
+    <img src="https://placekitten.com/200/200" alt="Kitten" style="position: absolute; bottom: 20px; right: 20px; animation: bounce 2s infinite alternate;">
+    <div class="love-text">I love you!</div>
   </div>
 
-  <!-- Romantic text message -->
-  <div class="message" id="message">
-    <p>The perfect thing about you is that you don't remind me of anyone,</p>
-    <p>everything is us — the crazy stuff, the risking and the experiences,</p>
-    <p>and it's all exciting because I get to do them with you.</p>
-    <p>You light up my days — you're an amazing, beautiful and precious person,</p>
-    <p>and I feel like the luckiest person.</p>
-    <p>You being one of the best decisions I made.</p>
-    <p>I promise to love you and cherish you because you mean a lot to me.</p>
-    <p>You make me feel comfortable and loved, and I hope I do the same to you.</p>
-    <p><strong>#MOREENMAKESMUYAHAPPY</strong></p>
+  <!-- Romantic Message -->
+  <div class="message">
+    The perfect thing about you is that you don't remind me of anyone, everything is us, the crazy stuff, the risking, and the experiences, and it's all exciting because I get to do them with you. You light up my days, you're an amazing, beautiful, and precious person, and I feel like the luckiest person. You being one of the best decisions I made. I promise to love you and cherish you because you mean a lot to me. You make me feel comfortable and loved, and I hope I do the same to you.
+    <br><br>
+    #MOREENMAKESMUYAHAPPY
   </div>
 
-  <!-- Button -->
-  <div class="button-container" id="button-container">
-    <button class="love-button">Will you be mine?</button>
-  </div>
-
-  <!-- Background music -->
-  <audio id="bg-music" src="romantic_guitar.mp3" autoplay loop></audio>
+  <!-- Button to ask "Will you be mine?" -->
+  <button class="love-button" onclick="alert('I’m so happy you said YES!')">Will you be mine?</button>
 
   <script>
-    // After bouquet animation
-    setTimeout(() => {
-      document.getElementById('message').style.display = 'block';
-    }, 4000);
+    // Delay the romantic message and button appearance
+    window.onload = function() {
+      setTimeout(function() {
+        document.querySelector('.message').style.display = 'block';
+      }, 3000); // Display message after 3 seconds
 
-    // After message fades in
-    setTimeout(() => {
-      document.getElementById('button-container').style.display = 'block';
-    }, 10000);
+      setTimeout(function() {
+        document.querySelector('.love-button').style.display = 'inline-block';
+      }, 6000); // Display button after 6 seconds
+    };
   </script>
 
 </body>
 </html>
+
